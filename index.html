@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buddy Bot - Anti-Bullying Chatbot</title>
+<style>
+body { font-family: Arial; display:flex; justify-content:center; align-items:center; height:100vh; background:#f0f8ff; margin:0; }
+.chat-container { width: 100%; max-width: 400px; background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); display:flex; flex-direction:column; }
+.chat-box { height:300px; overflow-y:auto; border:1px solid #ccc; padding:10px; margin-bottom:10px; border-radius:5px; background:#f9f9f9; display:flex; flex-direction:column; }
+.bot-message, .user-message { margin:5px 0; padding:8px 12px; border-radius:15px; max-width:80%; word-wrap:break-word; }
+.bot-message { background:#e0f7fa; align-self:flex-start; }
+.user-message { background:#c8e6c9; align-self:flex-end; text-align:right; }
+.input-container { display:flex; justify-content:space-between; }
+input[type=text] { width:75%; padding:8px; border-radius:5px; border:1px solid #ccc; }
+button { width:20%; padding:8px; border-radius:5px; border:none; background:#00796b; color:white; cursor:pointer; }
+button:hover { background:#004d40; }
+</style>
+</head>
+<body>
+<div class="chat-container">
+<h2>Buddy Bot 🤖</h2>
+<div class="chat-box" id="chat-box">
+<div class="bot-message">Hello! I’m Buddy Bot. How are you feeling today?</div>
+</div>
+<div class="input-container">
+<input type="text" id="user-input" placeholder="Type your message here..." />
+<button onclick="sendMessage()">Send</button>
+</div>
+</div>
+<script>
+const chatBox = document.getElementById('chat-box');
+const userInput = document.getElementById('user-input');
+
+function sendMessage(){
+    const message = userInput.value.trim();
+    if(!message) return;
+    const userMsg = document.createElement('div');
+    userMsg.classList.add('user-message');
+    userMsg.textContent = message;
+    chatBox.appendChild(userMsg);
+    userInput.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+    setTimeout(()=>{ 
+        const botMsg = document.createElement('div');
+        botMsg.classList.add('bot-message');
+        botMsg.textContent = getBotResponse(message.toLowerCase());
+        chatBox.appendChild(botMsg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    },500);
+}
+
+function getBotResponse(msg){
+    if(msg.includes("bully") || msg.includes("bullied")) return "I’m sorry you’re experiencing that. Call 1-800-422-4453.";
+    else if(msg.includes("sad") || msg.includes("upset")) return "It’s okay to feel sad. Sharing your feelings can help.";
+    else if(msg.includes("help")) return "I can guide you through anti-bullying strategies.";
+    else if(msg.includes("thank") || msg.includes("thanks")) return "I’m here to help anytime!";
+    else return "I understand. Can you tell me more about what’s happening?";
+}
+</script>
+</body>
+</html>
